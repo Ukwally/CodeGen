@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APP-ELISABETH</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="manifest" href="manifest.json">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
+        rel="stylesheet">
+
+    <script>
+        if ('ServiceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(() => console.log('PWA ativo com sucesso!'))
+                .catch((err) => console.log('Erro ao registar PWA:', err));
+        }
+    </script>
+</head>
+
+<body>
+    <main>
+        <section class="head">
+            <!--div id="qrcode" class="qrcode-set">
+
+            </!--div-->
+        </section>
+        <div class="card">
+            <div class="foto-set">
+                <div class="foto">
+                    <small>Adcionar</small>
+                </div>
+            </div>
+            <strong>Bem vinda <span> Elisabeth!</span></strong> <br>
+            <small>selecione o tipo a ser gerado</small>
+            <div class="form">
+                <label for="Nome"></label>
+                <input type="text" placeholder="Nome" name="Nome" id="Nome">
+
+                <label for="SobreNome"></label>
+                <input type="text" placeholder="Sobre Nome" name="SobreNome" id="SobreNome">
+
+                <label for="Email"></label>
+                <input type="text" placeholder="E-mail" name="Email" id="Email">
+
+                <label for="Telefone"></label>
+                <input type="text" placeholder="Telefone" name="Telefone" id="Telefone">
+
+                <label for="Organizacao"></label>
+                <input type="text" placeholder="Empresa" name="Organizacao" id="Organizacao">
+
+                <label for="Titulo"></label>
+                <input type="text" placeholder="Titulo/Cargo" name="Titulo" id="Titulo">
+
+                <label for="Facebook"></label>
+                <input type="text" placeholder="Facebook" name="Facebook" id="Facebook">
+
+                <label for="Linkedin"></label>
+                <input type="text" placeholder="Linkedin" name="Linkedin" id="Linkedin">
+
+                <label for="Instagram"></label>
+                <input type="text" placeholder="Instagram" name="Instagram" id="Instagram">
+
+                <label for="Site"></label>
+                <input type="text" placeholder="Site" name="Site" id="Site">
+
+                <button class="btn-gerar" onclick="GerarVCardQR()">GerarQR</button>
+                <button class="btn-baixar" style="display: none;" onclick="BaixarQR()">BaixarQR</button>
+            </div>
+            <!--span class="erro">* Password Errada!</span-->
+        </div>
+
+
+        <div class="modal-set" style="display: none;" id="modal-info">
+            <div class="modal">
+                <small>
+                    <strong>CONTA ORKAZY</strong> <br>
+                    <span>Os teus dados vão ser armazenados por 1 ano.</span> <br>
+                    <span>Apois isto vão ser eliminados do nosso banco de dados.</span> <br>
+                    <span>Se quiser persistir os dados terá que renovar a data de remocão.</span> <br>
+                    <span>Vamos emviar um email para avisar quando a data se aproximar.</span>
+                </small>
+                <div class="modal-footer">
+                    <span onclick="closeModal()">OK</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-set" style="display: none;" id="modal-qr">
+            <div class="modal">
+                <span class="close-icon" onclick="closeModal()">&#10005</span>
+                <div id="qrcode" class="qrcode-set">
+
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn-baixar" onclick="closeModal()">Baixar QR</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+        function GerarVCardQR() {
+            document.getElementById("qrcode").innerHTML = "";
+            const Nome = document.getElementById('Nome').value;
+            const SobreNome = document.getElementById('SobreNome').value;
+            const Email = document.getElementById('Email').value;
+            const Telefone = document.getElementById('Telefone').value;
+            const Organizacao = document.getElementById('Organizacao').value;
+            const Titulo = document.getElementById('Titulo').value;
+            const Facebook = document.getElementById('Facebook').value;
+            const Linkedin = document.getElementById('Linkedin').value;
+            const Instagram = document.getElementById('Instagram').value;
+            const Site = document.getElementById('Site').value;
+
+            const envio = [
+                "BEGIN:VCARD",
+                "VERSION:3.0",
+
+                Nome || SobreNome ? `N:${SobreNome};${Nome};;;` : "",
+                Nome || SobreNome ? `FN:${Nome} ${SobreNome}` : "",
+
+                Email ? `EMAIL:${Email}` : "",
+                Telefone ? `TEL;TYPE=CELL:${Telefone}` : "",
+                Organizacao ? `ORG:${Organizacao}` : "",
+                Titulo ? `TITLE:${Titulo}` : "",
+                Facebook ? `URL:${Facebook}` : "",
+                Linkedin ? `URL:${Linkedin}` : "",
+                Instagram ? `URL:${Instagram}` : "",
+                Site ? `URL:${Site}` : "",
+
+                "END:VCARD"
+            ]
+                .filter(item => item !== "")
+                .join("\n");
+
+            console.log(envio);
+            console.log(typeof QRCode);
+
+            const qrcode = new QRCode(document.getElementById("qrcode"), {
+                text: envio,
+                width: 256,
+                height: 256
+            });
+
+
+
+            var exibirBtnBaixar = document.querySelector('#qrcode img') ? true : false;
+            if (exibirBtnBaixar) {
+                document.getElementById('BaixarQR').style = 'display:flex';
+                //remover codigo para modal
+                document.getElementById('modal-qr').style = 'display:flex';
+            }
+
+            function BaixarQR() {
+                const img = document.querySelector("#qrcode img");
+                if (img) {
+                    const link = document.createElement("a");
+                    link.download = "vcard-qrcode.png";
+                    link.href = img.src;
+                    link.click();
+
+                    closeModal();
+                }
+            }
+
+        }
+        function closeModal() {
+            document.getElementById('modal-qr').style = 'display:none!important;'
+        }
+    </script>
+    <script src="scripts.js"></script>
+    <!--script>
+        /*//algoritmo da elisabeth
+        function GerarVCardQR() {
+            const Nome = document.getElementById('Nome').value;
+            const SobreNome = document.getElementById('SobreNome').value;
+            const Email = document.getElementById('Email').value;
+            const Telefone = document.getElementById('Telefone').value;
+            const Organizacao = document.getElementById('Organizacao').value;
+            const Titulo = document.getElementById('Titulo').value;
+            const Facebook = document.getElementById('Facebook').value;
+            const Linkedin = document.getElementById('Linkedin').value;
+            const Instagram = document.getElementById('Instagram').value;
+            const Site = document.getElementById('Site').value;
+
+            const NovoNome = Nome == '' ? 'vasio' : `N:${SobreNome};${Nome};;; `;
+            const NovoSobreNome = SobreNome == '' ? 'vasio' : `${SobreNome}`;
+
+            const NomeCompleto = `FN:${NovoNome} ${NovoSobreNome}`;
+
+            const NovoEmail = Email == '' ? 'vasio' : `${Email}`;
+            const NovoTelefone = Telefone == '' ? 'vasio' : `TEL;TYPE=CELL:${Telefone}`;
+            const NovoOrganizacao = Organizacao == '' ? 'vasio' : `ORG:${Organizacao}`;
+            const NovoTitulo = Titulo == '' ? 'vasio' : `TITLE:${Titulo}`;
+            const NovoFacebook = Facebook == '' ? 'vasio' : `URL:${Facebook}`;
+            const NovoLinkedin = Linkedin == '' ? 'vasio' : `URL:${Linkedin}`;
+            const NovoInstagram = Instagram == '' ? 'vasio' : `URL:${Instagram}`;
+            const NovoSite = Site == '' ? 'vasio' : `URL:${Site}`;
+
+
+
+            const dados = [{
+                'NovoNome': NovoNome,
+                'NomeCompleto': NomeCompleto,
+                'NovoEmail': NovoEmail,
+                'NovoTelefone': NovoTelefone,
+                'NovoFacebook': NovoFacebook,
+                'NovoLinkedin': NovoLinkedin,
+                'NovoInstagram': NovoInstagram,
+                'NovoSite': NovoSite,
+            }]
+
+            dados.forEach((key, value) => {
+                console.log(`Chave: ${key} , Value ${value}`)
+            });
+
+
+            const envio =
+                `
+                BEGIN:VCARD
+                VERSION:3.0
+                ${NovoNome}',
+                ${NovoSobreNome},
+                ${NomeCompleto},
+                ${NovoEmail},
+                ${NovoTelefone},
+                ${NovoOrganizacao},
+                ${NovoTitulo},
+                ${NovoFacebook},
+                ${NovoLinkedin},
+                ${NovoInstagram},
+                ${NovoSite},
+                END:VCARD
+                 `
+                ;
+        }*/
+    </script-->
+</body>
+
+</html>
