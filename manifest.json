@@ -2,7 +2,7 @@
     "name":"Elisaeth QRGen",
     "short_name":"ElisaQRGen",
     "start_url":"./index.html",
-    "scope":".",
+    "scope":"./",
     "display":"standalone",
     "background_color":"#ffffff",
     "theme_color":"#f8fafc",
