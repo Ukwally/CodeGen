@@ -168,14 +168,23 @@
         }
         function BaixarQR() {
             const img = document.querySelector("#qrcode img");
-            console.log('img pegue ' + img);
-            if (img) {
+            const canva = document.querySelector("#qrcode canvas");
+
+            let url = "";
+            if (img && img.src) {
+                url = img.src;
+            } else if (canvas) {
+                url = canvas.toDataURL("image/png");
+            }
+
+            if (url) {
                 const link = document.createElement("a");
                 link.download = "vcard-qrcode.png";
-                link.href = img.src;
+                link.href = url;
                 link.click();
-
                 closeModal();
+            } else {
+                alert('QR Ainda nao foi gerado ou renderizado')
             }
         }
         function closeModal() {
