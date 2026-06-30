@@ -129,7 +129,8 @@ main {
   box-sizing: border-box;
   width: 200px;
 }
-.card .form input[type="submit"] {
+.card .form input[type="submit"],
+.card .form button {
   background-color: var(--color-blue);
   border: none;
   border-radius: 6px;
@@ -140,18 +141,19 @@ main {
   margin-top: 20px;
 }
 
-.card .form input {
+.card .form input,
+.card .form button {
   outline: none;
 }
 .card .form input:focus {
-    outline-color: var(--color-blue);
-    outline-width: 1px;
-    outline-style: dashed;
+  outline-color: var(--color-blue);
+  outline-width: 1px;
+  outline-style: dashed;
 }
-.card .form input:focus[type="submit"] {
-    outline-style: solid;
-    outline-color: var(--primary-Blue13);
-
+.card .form input:focus[type="submit"],
+.card .form button:focus {
+  outline-style: solid;
+  outline-color: var(--primary-Blue13);
 }
 .erro {
   margin-top: 20px;
