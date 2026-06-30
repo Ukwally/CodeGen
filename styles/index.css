@@ -112,15 +112,15 @@ main {
   font-size: 10px;
   font-weight: 500;
 }
-.card form {
+.card .form {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
 }
 
-.card form input[type="text"],
-.card form input[type="password"] {
+.card .form input[type="text"],
+.card .form input[type="password"] {
   border: 2px solid var(--dark2);
   height: 40px;
   border-radius: 6px;
@@ -129,7 +129,7 @@ main {
   box-sizing: border-box;
   width: 200px;
 }
-.card form input[type="submit"] {
+.card .form input[type="submit"] {
   background-color: var(--color-blue);
   border: none;
   border-radius: 6px;
@@ -140,15 +140,15 @@ main {
   margin-top: 20px;
 }
 
-.card form input {
+.card .form input {
   outline: none;
 }
-.card form input:focus {
+.card .form input:focus {
     outline-color: var(--color-blue);
     outline-width: 1px;
     outline-style: dashed;
 }
-.card form input:focus[type="submit"] {
+.card .form input:focus[type="submit"] {
     outline-style: solid;
     outline-color: var(--primary-Blue13);
 
