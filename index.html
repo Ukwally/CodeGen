@@ -13,9 +13,12 @@
 
     <script>
         if ('ServiceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js')
-                .then(() => console.log('PWA ativo com sucesso!'))
-                .catch((err) => console.log('Erro ao registar PWA:', err));
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(() => console.log('PWA ativo com sucesso no escopo:', reg.scope))
+                    .catch((err) => console.log('Erro ao registar PWA:', err));
+
+            })
         }
     </script>
 </head>
@@ -141,9 +144,6 @@
                 .filter(item => item !== "")
                 .join("\n");
 
-            console.log(envio);
-            console.log(typeof QRCode);
-
             const qrcode = new QRCode(document.getElementById("qrcode"), {
                 text: envio,
                 width: 256,
@@ -152,7 +152,7 @@
 
 
 
-            var exibirBtnBaixar = document.querySelector('#qrcode img') ? true : false;
+            var exibirBtnBaixar = document.querySelector('#qrcode img')  ? true : false;
             if (exibirBtnBaixar) {
                 document.getElementById('BaixarQR').style = 'display:flex';
                 //remover codigo para modal

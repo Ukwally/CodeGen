@@ -1,12 +1,14 @@
 import qrcode
 
-nome = 'Beatriz paula'
-sobrenome = 'Mafuta'
-telefone = '941487430'
-email = 'beatriz@gmail.com'
-empresa = 'eatrlma'
-cargo = 'CEO'
-site = 'https://www.instagram.com/beatrizpaula'
+nome = 'Compras & Encomendas'
+sobrenome = ''
+telefone = '937829410'
+telefone2 = '955876577'
+email = 'lucianondumbo@gmail.com'
+empresa = 'Compras & Encomendas'
+cargo = 'Empresa'
+site = 'https://www.instagram.com/Compras&Encomendas'
+site2 = 'https://www.facebook.com/Compras&Encomendas'
 
 #PHOTO;VALUE=uri:https://pegarFotoNoUploadQueUserFezNaNuvem.com
 vcard = f"""BEGIN:VCARD
@@ -16,8 +18,9 @@ FN:{nome} {sobrenome}
 ORG:{empresa}
 TITLE:{cargo}
 TEL;TYPE=CELL:{telefone}
-EMAIL:{email}
+TEL;TYPE=CELL:{telefone2}
 URL:{site}
+URL:{site2}
 END:VCARD"""
 
 qr = qrcode.make(vcard)
