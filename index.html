@@ -158,7 +158,6 @@
             });
 
 
-
             // espera a imagem ser criada
             setTimeout(() => {
                 document.getElementById("processar").style.display = "none";
@@ -166,34 +165,28 @@
             }, 300);
 
         }
+
         function BaixarQR() {
-            const img = document.querySelector("#qrcode img");
-            const canva = document.querySelector("#qrcode canvas");
+            const canvas = document.querySelector("#qrcode canvas");
 
-            if(canvas){
-                alert('canva')
-            }
-            if(img){
-                alert('img')
-            }
-
-            let url = "";
-            if (img && img.src) {
-                url = img.src;
-            } else if (canvas) {
-                url = canvas.toDataURL("image/png");
-            }
-
-            if (url) {
+            if (canvas) {
                 const link = document.createElement("a");
                 link.download = "vcard-qrcode.png";
-                link.href = url;
+                link.href = canvas.toDataURL("image/png");
                 link.click();
-                closeModal();
-            } else {
-                alert('QR Ainda nao foi gerado ou renderizado')
             }
         }
+
+        //function BaixarQR() {
+        //    const img = document.querySelector("#qrcode img");
+        //    if (img) {
+        //        const link = document.createElement("a");
+        //        link.download = "vcard-qrcode.png";
+        //        link.href = img.src;
+        //        link.click();
+        //        closeModal();
+        //    }
+        //}
         function closeModal() {
             document.getElementById('modal-qr').style.display = 'none'
         }
