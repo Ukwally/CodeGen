@@ -223,7 +223,7 @@ button.btn-baixar {
 }
 .modal-set .modal {
   background-color: var(--primary-Blue1);
-  width: 280px;
+  width: 300px;
   box-shadow: 0 2px 7px 5px rgba(236, 235, 235, 0.322);
   border-radius: 10px;
   padding: 20px;
