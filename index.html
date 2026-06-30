@@ -26,7 +26,7 @@
 <body>
     <main>
         <section class="head">
-            <!--div id="qrcode" class="qrcode-set">
+            <!--div id="qr-code" class="qrcode-set">
 
             </!--div-->
         </section>
@@ -165,18 +165,18 @@
                 document.getElementById("btnBaixar").style.display = "inline-block";
             }, 300);
 
-            function BaixarQR() {
-                const img = document.querySelector("#qrcode>img");
-                if (img) {
-                    const link = document.createElement("a");
-                    link.download = "vcard-qrcode.png";
-                    link.href = img.src;
-                    link.click();
+        }
+        function BaixarQR() {
+            const img = document.querySelector("#qrcode img");
+            console.log('img pegue ' + img);
+            if (img) {
+                const link = document.createElement("a");
+                link.download = "vcard-qrcode.png";
+                link.href = img.src;
+                link.click();
 
-                    closeModal();
-                }
+                closeModal();
             }
-
         }
         function closeModal() {
             document.getElementById('modal-qr').style.display = 'none'
