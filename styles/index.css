@@ -94,7 +94,7 @@ main {
   box-shadow: 0 2px 7px 5px rgba(236, 235, 235, 0.205);
   border: 1px solid var(--bg-light);
   height: 350px;
-  width: 250px;
+  width: 300px;
   border-radius: 20px;
   text-align: center;
   border-bottom: 4px solid var(--dark2);
