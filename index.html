@@ -170,6 +170,13 @@
             const img = document.querySelector("#qrcode img");
             const canva = document.querySelector("#qrcode canvas");
 
+            if(canvas){
+                alert('canva')
+            }
+            if(img){
+                alert('img')
+            }
+
             let url = "";
             if (img && img.src) {
                 url = img.src;
